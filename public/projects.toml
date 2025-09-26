@@ -1,0 +1,12 @@
+# SiFli Sparks 项目配置文件
+# 这个文件包含了所有要展示的SiFli芯片相关开源项目
+
+[projects.iot_gateway]
+name = "SiFli IoT Gateway"
+description = """
+基于SiFli芯片的高性能物联网网关，支持多种通信协议和设备连接。
+提供设备管理、数据采集、协议转换和云端同步等功能。
+"""
+thumbnail = "iot-gateway.jpg"
+tags = ["IoT", "网关", "通信", "嵌入式", "SiFli"]
+github_url = "https://github.com/facebook/react"

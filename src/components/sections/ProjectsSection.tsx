@@ -1,63 +1,37 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
 import { Search, Tag } from 'lucide-react'
 import ProjectCard from '../ui/ProjectCard'
+import { loadProjects, Project } from '../../utils/tomlParser'
 
 const ProjectsSection = () => {
   const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const [projects, setProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   
-  // 使用loadProjects函数获取项目数据
-  const [projects] = useState(() => {
-    // 在实际应用中，这里可以异步加载TOML数据
-    // 现在使用模拟数据
-    return [
-      {
-        name: "SiFli IoT Gateway",
-        description: "基于SiFli芯片的高性能物联网网关，支持多种通信协议",
-        thumbnail: "project1.jpg",
-        tags: ["IoT", "网关", "通信"],
-        github_url: "https://github.com/example/sifli-iot-gateway"
-      },
-      {
-        name: "SiFli Audio Processor",
-        description: "专业级音频处理器，提供低延迟、高保真的音频处理能力",
-        thumbnail: "project2.jpg", 
-        tags: ["音频", "处理器", "实时"],
-        github_url: "https://github.com/example/sifli-audio"
-      },
-      {
-        name: "SiFli Sensor Hub",
-        description: "集成多种传感器的数据收集和处理中心",
-        thumbnail: "project3.jpg",
-        tags: ["传感器", "数据", "监控"],
-        github_url: "https://github.com/example/sifli-sensor-hub"
-      },
-      {
-        name: "SiFli Display Driver",
-        description: "高效的显示驱动程序，支持多种显示设备",
-        thumbnail: "project4.jpg",
-        tags: ["显示", "驱动", "界面"],
-        github_url: "https://github.com/example/sifli-display"
-      },
-      {
-        name: "SiFli Wireless Stack",
-        description: "完整的无线通信协议栈，支持WiFi、蓝牙等协议",
-        thumbnail: "wireless-stack.jpg",
-        tags: ["无线", "WiFi", "蓝牙", "协议栈"],
-        github_url: "https://github.com/sifli-sparks/wireless-stack"
-      },
-      {
-        name: "SiFli Power Manager",
-        description: "智能电源管理系统，优化设备功耗和电池生命周期",
-        thumbnail: "power-manager.jpg",
-        tags: ["电源", "功耗", "电池", "节能"],
-        github_url: "https://github.com/sifli-sparks/power-manager"
+  // 加载TOML项目数据
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        setLoading(true)
+        const projectData = await loadProjects()
+        setProjects(projectData)
+        setError(null)
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Failed to load projects'
+        setError(errorMessage)
+        console.error('Error loading projects:', err)
+      } finally {
+        setLoading(false)
       }
-    ]
-  })
+    }
+
+    fetchProjects()
+  }, [])
 
   // 获取所有标签
   const allTags = useMemo(() => {
@@ -109,7 +83,47 @@ const ProjectsSection = () => {
           </p>
         </motion.div>
 
-        {/* Search and Filter */}
+        {/* Error State */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center py-12"
+          >
+            <div className="text-6xl mb-4">❌</div>
+            <h3 className="text-xl font-semibold text-red-600 dark:text-red-400 mb-2">
+              配置加载失败
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              {error}
+            </p>
+            <motion.button
+              onClick={() => window.location.reload()}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="btn btn-primary"
+            >
+              重新加载
+            </motion.button>
+          </motion.div>
+        )}
+
+        {/* Loading State */}
+        {loading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-12"
+          >
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500 mb-4"></div>
+            <p className="text-gray-600 dark:text-gray-400">
+              正在加载项目配置...
+            </p>
+          </motion.div>
+        )}
+
+        {/* Search and Filter - only show when not loading and no error */}
+        {!loading && !error && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -199,8 +213,10 @@ const ProjectsSection = () => {
             ))}
           </div>
         </motion.div>
+        )}
 
-        {/* Projects Grid */}
+        {/* Projects Grid - only show when not loading and no error */}
+        {!loading && !error && (
         <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.length > 0 ? (
             filteredProjects.map((project, index) => (
@@ -265,6 +281,7 @@ const ProjectsSection = () => {
             </motion.div>
           )}
         </motion.div>
+        )}
       </div>
     </section>
   )
