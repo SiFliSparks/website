@@ -29,9 +29,9 @@ const AboutSection = () => {
             {t('about.description')}
           </p>
         </motion.div>
-
-        {/* Stats */}
-        <motion.div
+        
+        {/* Stats 先不要，数量太少比较尴尬*/}
+        {/* <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -58,7 +58,7 @@ const AboutSection = () => {
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
