@@ -1,0 +1,65 @@
+{
+  "site": {
+    "title": "SiFli Sparks",
+    "description": "Discover innovative open source projects built with SiFli chips",
+    "tagline": "Ignite Innovation, Connect the Future"
+  },
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "SiFli Sparks",
+    "subtitle": "Discover innovative",
+    "highlight": "open source projects",
+    "description": "Find community-driven, high-quality open source solutions to power your next project.",
+    "cta": {
+      "explore": "Explore Projects",
+      "learn_more": "Learn More"
+    }
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "search_placeholder": "Search projects...",
+    "filter_all": "All",
+    "no_results": "No projects found",
+    "view_on_github": "View on GitHub",
+    "tags": "Tags"
+  },
+  "about": {
+    "title": "About SiFli Sparks",
+    "description": "SiFli Sparks is dedicated to collecting and showcasing excellent open source projects based on SiFli chips, promoting technological innovation and community collaboration.",
+    "stats": {
+      "projects": "Projects",
+      "contributors": "Contributors", 
+      "stars": "Github Stars"
+    }
+  },
+  "footer": {
+    "description": "Explore innovative open source projects in the SiFli chip ecosystem",
+    "links": {
+      "about": "About Us",
+      "contact": "Contact",
+      "github": "GitHub",
+      "documentation": "Documentation"
+    },
+    "copyright": "© 2024 SiFli Sparks. All rights reserved."
+  },
+  "theme": {
+    "light": "Light Mode",
+    "dark": "Dark Mode",
+    "system": "System"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "open": "Open"
+  }
+}

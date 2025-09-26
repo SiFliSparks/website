@@ -1,0 +1,58 @@
+# SiFli Sparks 项目配置
+# 这个文件定义了要展示的开源项目
+
+[[projects]]
+name = "SiFli IoT Gateway"
+description = "基于SiFli芯片的高性能物联网网关，支持WiFi、蓝牙、LoRa等多种通信协议。提供设备管理、数据采集、远程控制等功能。"
+thumbnail = "iot-gateway.jpg"
+tags = ["IoT", "网关", "通信", "嵌入式"]
+github_url = "https://github.com/sifli-sparks/iot-gateway"
+
+[[projects]]
+name = "SiFli Audio Processor"
+description = "专业级音频处理器，基于SiFli芯片的DSP能力，提供低延迟、高保真的音频处理。支持降噪、回声消除、音效增强等功能。"
+thumbnail = "audio-processor.jpg"
+tags = ["音频", "DSP", "实时处理", "降噪"]
+github_url = "https://github.com/sifli-sparks/audio-processor"
+
+[[projects]]
+name = "SiFli Sensor Hub"
+description = "集成多种传感器的数据收集和处理中心。支持温湿度、光照、运动、气体等传感器，提供实时监控和数据分析能力。"
+thumbnail = "sensor-hub.jpg"
+tags = ["传感器", "数据采集", "监控", "物联网"]
+github_url = "https://github.com/sifli-sparks/sensor-hub"
+
+[[projects]]
+name = "SiFli Display Driver"
+description = "高效的显示驱动程序，支持LCD、OLED、E-ink等多种显示设备。提供图形库、字体渲染、UI框架等完整解决方案。"
+thumbnail = "display-driver.jpg"
+tags = ["显示", "驱动", "GUI", "图形"]
+github_url = "https://github.com/sifli-sparks/display-driver"
+
+[[projects]]
+name = "SiFli Wireless Stack"
+description = "完整的无线通信协议栈，基于SiFli芯片的RF能力。支持WiFi 6、蓝牙5.0、Zigbee等协议，提供稳定可靠的无线连接。"
+thumbnail = "wireless-stack.jpg"
+tags = ["无线", "WiFi", "蓝牙", "协议栈"]
+github_url = "https://github.com/sifli-sparks/wireless-stack"
+
+[[projects]]
+name = "SiFli Power Manager"
+description = "智能电源管理系统，优化设备功耗和电池生命周期。支持动态电压调节、睡眠模式管理、充电控制等功能。"
+thumbnail = "power-manager.jpg"
+tags = ["电源", "功耗优化", "电池", "节能"]
+github_url = "https://github.com/sifli-sparks/power-manager"
+
+[[projects]]
+name = "SiFli Security Module"
+description = "硬件安全模块，基于SiFli芯片的安全特性。提供加密解密、数字签名、安全启动、密钥管理等安全功能。"
+thumbnail = "security-module.jpg"
+tags = ["安全", "加密", "认证", "密钥管理"]
+github_url = "https://github.com/sifli-sparks/security-module"
+
+[[projects]]
+name = "SiFli Development Kit"
+description = "SiFli芯片开发套件，包含开发板、调试工具、示例代码和详细文档。帮助开发者快速上手SiFli芯片开发。"
+thumbnail = "dev-kit.jpg"
+tags = ["开发工具", "SDK", "示例", "文档"]
+github_url = "https://github.com/sifli-sparks/development-kit"
