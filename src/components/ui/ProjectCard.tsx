@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { Github, Tag, Star, GitFork, Eye } from 'lucide-react'
-import { useState, useRef, useMemo } from 'react'
+import { useState, useRef } from 'react'
+import { useGitHubStatsWithCache } from '../../hooks/useGitHubStats'
 
 interface Project {
   name: string
@@ -17,6 +18,9 @@ interface ProjectCardProps {
 const ProjectCard = ({ project }: ProjectCardProps) => {
   const [isHovered, setIsHovered] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
+  
+  // 获取真实的GitHub统计数据
+  const { stats: githubStats, loading: statsLoading } = useGitHubStatsWithCache(project.github_url)
   
   // 3D 鼠标跟踪效果 - 优化配置
   const mouseX = useMotionValue(0)
@@ -56,24 +60,6 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     mouseY.set(0)
     setIsHovered(false)
   }
-
-  // 基于项目名称生成一致的伪随机数据
-  const stats = useMemo(() => {
-    // 使用项目名称作为种子生成稳定的"随机"数据
-    const hash = project.name.split('').reduce((acc, char) => {
-      return ((acc << 5) - acc) + char.charCodeAt(0)
-    }, 0)
-    
-    // 确保哈希值为正数
-    const seed = Math.abs(hash)
-    
-    // 基于种子生成稳定的统计数据
-    const stars = (seed % 900) + 100 // 100-999之间
-    const forks = (seed % 150) + 20  // 20-169之间  
-    const views = (seed % 4500) + 500 // 500-4999之间
-    
-    return { stars, forks, views }
-  }, [project.name])
 
   return (
     <motion.div
@@ -207,19 +193,23 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             className="absolute top-3 right-3 flex gap-2"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ 
-              opacity: isHovered ? 1 : 0,
-              scale: isHovered ? 1 : 0.8 
+              opacity: isHovered && githubStats && !statsLoading ? 1 : 0,
+              scale: isHovered && githubStats && !statsLoading ? 1 : 0.8 
             }}
             transition={{ duration: 0.3 }}
           >
-            <div className="bg-black/20 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1 text-xs text-white">
-              <Star size={10} />
-              {stats.stars}
-            </div>
-            <div className="bg-black/20 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1 text-xs text-white">
-              <GitFork size={10} />
-              {stats.forks}
-            </div>
+            {githubStats && !statsLoading && (
+              <>
+                <div className="bg-black/20 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1 text-xs text-white">
+                  <Star size={10} />
+                  {githubStats.stars}
+                </div>
+                <div className="bg-black/20 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1 text-xs text-white">
+                  <GitFork size={10} />
+                  {githubStats.forks}
+                </div>
+              </>
+            )}
           </motion.div>
 
           {/* 快速访问按钮 */}
@@ -266,7 +256,12 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             {/* 技术栈指示器 */}
             <div className="flex items-center gap-2 mb-2">
               <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-xs text-gray-500 dark:text-gray-400">Active Development</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {githubStats && !statsLoading ? githubStats.language : 'Active Development'}
+              </span>
+              {statsLoading && (
+                <span className="text-xs text-gray-400">Loading...</span>
+              )}
             </div>
           </div>
           
@@ -293,32 +288,41 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           </div>
 
           {/* 底部操作区 */}
-          <div className="flex items-center justify-between">
-            <motion.a
-              href={project.github_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-primary-500 hover:text-primary-600 font-medium text-sm transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Github size={16} />
-              <span>Repository</span>
-            </motion.a>
-            
-            <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-              <div className="flex items-center gap-1">
-                <Star size={12} />
-                {stats.stars}
-              </div>
-              <div className="flex items-center gap-1">
-                <Eye size={12} />
-                {stats.views}
-              </div>
-            </div>
-          </div>
-
-          {/* 进度条装饰 */}
+            <div className="flex items-center justify-between">
+              <motion.a
+                href={project.github_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-primary-500 hover:text-primary-600 font-medium text-sm transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Github size={16} />
+                <span>Repository</span>
+              </motion.a>
+              
+              {/* 只在有GitHub数据且不在加载时显示统计 */}
+              {githubStats && !statsLoading && (
+                <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+                  <div className="flex items-center gap-1">
+                    <Star size={12} />
+                    {githubStats.stars}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Eye size={12} />
+                    {githubStats.watchers}
+                  </div>
+                </div>
+              )}
+              
+              {/* 加载状态指示器 */}
+              {statsLoading && (
+                <div className="flex items-center gap-2 text-xs text-gray-400">
+                  <div className="w-2 h-2 bg-primary-400 rounded-full animate-pulse" />
+                  <span>Loading stats...</span>
+                </div>
+              )}
+            </div>          {/* 进度条装饰 */}
           <motion.div
             className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-primary-500 via-blue-500 to-purple-500 rounded-full"
             initial={{ width: 0 }}

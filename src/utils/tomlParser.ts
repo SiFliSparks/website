@@ -21,46 +21,46 @@ export const loadProjects = async (): Promise<Project[]> => {
   // 并解析成 Project 对象数组
   return [
     {
-      name: "SiFli IoT Gateway",
-      description: "基于SiFli芯片的高性能物联网网关，支持多种通信协议和设备连接",
-      thumbnail: "iot-gateway.jpg",
-      tags: ["IoT", "网关", "通信", "嵌入式"],
-      github_url: "https://github.com/sifli-sparks/iot-gateway"
+      name: "React",
+      description: "用于构建用户界面的 JavaScript 库，采用组件化开发模式",
+      thumbnail: "react.jpg",
+      tags: ["JavaScript", "前端", "组件", "React"],
+      github_url: "https://github.com/facebook/react"
     },
     {
-      name: "SiFli Audio Processor",
-      description: "专业级音频处理器，提供低延迟、高保真的音频处理能力",
-      thumbnail: "audio-processor.jpg",
-      tags: ["音频", "处理器", "实时", "DSP"],
-      github_url: "https://github.com/sifli-sparks/audio-processor"
+      name: "Vue.js",
+      description: "渐进式 JavaScript 框架，易学易用，性能出色且功能丰富",
+      thumbnail: "vue.jpg",
+      tags: ["JavaScript", "前端", "框架", "Vue"],
+      github_url: "https://github.com/vuejs/vue"
     },
     {
-      name: "SiFli Sensor Hub",
-      description: "集成多种传感器的数据收集和处理中心，支持实时监控和数据分析",
-      thumbnail: "sensor-hub.jpg",
-      tags: ["传感器", "数据", "监控", "物联网"],
-      github_url: "https://github.com/sifli-sparks/sensor-hub"
+      name: "TypeScript",
+      description: "JavaScript 的超集，添加了类型系统和最新的 ECMAScript 特性",
+      thumbnail: "typescript.jpg",
+      tags: ["TypeScript", "编程语言", "微软", "类型安全"],
+      github_url: "https://github.com/microsoft/TypeScript"
     },
     {
-      name: "SiFli Display Driver",
-      description: "高效的显示驱动程序，支持多种显示设备和界面框架",
-      thumbnail: "display-driver.jpg",
-      tags: ["显示", "驱动", "GUI", "嵌入式"],
-      github_url: "https://github.com/sifli-sparks/display-driver"
+      name: "Vite",
+      description: "下一代前端构建工具，提供极快的开发体验和优化的生产构建",
+      thumbnail: "vite.jpg",
+      tags: ["构建工具", "开发工具", "前端", "Vue"],
+      github_url: "https://github.com/vitejs/vite"
     },
     {
-      name: "SiFli Wireless Stack",
-      description: "完整的无线通信协议栈，支持WiFi、蓝牙等多种无线技术",
-      thumbnail: "wireless-stack.jpg",
-      tags: ["无线", "WiFi", "蓝牙", "协议栈"],
-      github_url: "https://github.com/sifli-sparks/wireless-stack"
+      name: "Node.js",
+      description: "基于 Chrome V8 引擎的 JavaScript 运行时，用于构建快速的服务器端应用",
+      thumbnail: "nodejs.jpg",
+      tags: ["JavaScript", "服务端", "运行时", "开源"],
+      github_url: "https://github.com/nodejs/node"
     },
     {
-      name: "SiFli Power Manager",
-      description: "智能电源管理系统，优化设备功耗和电池生命周期",
-      thumbnail: "power-manager.jpg",
-      tags: ["电源", "功耗", "电池", "节能"],
-      github_url: "https://github.com/sifli-sparks/power-manager"
+      name: "Tailwind CSS",
+      description: "实用工具优先的 CSS 框架，用于快速构建自定义设计",
+      thumbnail: "tailwind.jpg",
+      tags: ["CSS", "框架", "设计", "前端"],
+      github_url: "https://github.com/tailwindlabs/tailwindcss"
     }
   ]
 }
