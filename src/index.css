@@ -56,6 +56,78 @@
   .animate-pulse-slow {
     animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .transform-gpu {
+    transform: translateZ(0);
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+  }
+
+  /* 玻璃态效果 */
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+
+  /* 霓虹发光效果 */
+  .neon-glow {
+    box-shadow: 
+      0 0 5px theme('colors.primary.500'),
+      0 0 20px theme('colors.primary.500'),
+      0 0 35px theme('colors.primary.500'),
+      0 0 50px theme('colors.primary.500');
+  }
+
+  /* 卡片悬浮阴影 */
+  .card-shadow {
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .dark .card-shadow {
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.3),
+      0 2px 4px -1px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+
+  /* 渐变边框 */
+  .gradient-border {
+    background: linear-gradient(theme('colors.gray.100'), theme('colors.gray.100')) padding-box,
+                linear-gradient(45deg, theme('colors.primary.500'), theme('colors.blue.500'), theme('colors.purple.500')) border-box;
+    border: 1px solid transparent;
+  }
+
+  .dark .gradient-border {
+    background: linear-gradient(theme('colors.dark.800'), theme('colors.dark.800')) padding-box,
+                linear-gradient(45deg, theme('colors.primary.500'), theme('colors.blue.500'), theme('colors.purple.500')) border-box;
+  }
 }
 
 /* 自定义滚动条 */

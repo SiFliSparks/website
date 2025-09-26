@@ -5,6 +5,8 @@ import Hero from './components/sections/Hero'
 import ProjectsSection from './components/sections/ProjectsSection'
 import AboutSection from './components/sections/AboutSection'
 import Footer from './components/layout/Footer'
+import AnimatedBackground from './components/ui/AnimatedBackground'
+import CursorGlow from './components/ui/CursorGlow'
 import { ThemeProvider } from './contexts/ThemeContext'
 
 function App() {
@@ -33,14 +35,18 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-white dark:bg-dark-900 text-gray-900 dark:text-gray-100">
-        <Header />
-        <main>
-          <Hero />
-          <ProjectsSection />
-          <AboutSection />
-        </main>
-        <Footer />
+      <div className="min-h-screen bg-white dark:bg-dark-900 text-gray-900 dark:text-gray-100 relative">
+        <CursorGlow />
+        <AnimatedBackground />
+        <div className="relative z-10">
+          <Header />
+          <main>
+            <Hero />
+            <ProjectsSection />
+            <AboutSection />
+          </main>
+          <Footer />
+        </div>
       </div>
     </ThemeProvider>
   )
