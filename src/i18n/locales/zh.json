@@ -42,8 +42,7 @@
     "links": {
       "about": "关于我们",
       "contact": "联系我们",
-      "github": "GitHub",
-      "documentation": "文档"
+      "github": "GitHub"
     },
     "copyright": "© 2024 SiFli Sparks. 保留所有权利。"
   },

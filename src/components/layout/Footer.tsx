@@ -9,8 +9,7 @@ const Footer = () => {
   const links = [
     { label: t('footer.links.about'), href: '#about' },
     { label: t('footer.links.contact'), href: '#contact' },
-    { label: t('footer.links.github'), href: 'https://github.com/sifli-sparks', external: true },
-    { label: t('footer.links.documentation'), href: 'https://docs.sifli-sparks.com', external: true },
+    { label: t('footer.links.github'), href: 'https://github.com/SiFliSparks/', external: true }
   ]
 
   return (
@@ -34,20 +33,13 @@ const Footer = () => {
             {/* Social Links */}
             <div className="flex space-x-4">
               <a
-                href="https://github.com/sifli-sparks"
+                href="https://github.com/SiFliSparks"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
                 aria-label="GitHub"
               >
                 <Github size={20} />
-              </a>
-              <a
-                href="mailto:contact@sifli-sparks.com"
-                className="p-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
-                aria-label="Email"
-              >
-                <Mail size={20} />
               </a>
             </div>
           </div>
@@ -75,13 +67,6 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-semibold mb-4">联系我们</h3>
             <div className="space-y-3">
-              <a
-                href="mailto:contact@sifli-sparks.com"
-                className="text-gray-400 hover:text-primary-400 transition-colors flex items-center gap-2"
-              >
-                <Mail size={16} />
-                contact@sifli-sparks.com
-              </a>
               <a
                 href="https://github.com/sifli-sparks"
                 target="_blank"

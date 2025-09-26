@@ -42,8 +42,7 @@
     "links": {
       "about": "About Us",
       "contact": "Contact",
-      "github": "GitHub",
-      "documentation": "Documentation"
+      "github": "GitHub"
     },
     "copyright": "© 2024 SiFli Sparks. All rights reserved."
   },
