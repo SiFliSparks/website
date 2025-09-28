@@ -1,15 +1,16 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'framer-motion'
-import { Zap, Users, Star, Github } from 'lucide-react'
+// import { Zap, Users, Star, Github } from 'lucide-react'
+import { Github } from 'lucide-react'
 
 const AboutSection = () => {
   const { t } = useTranslation()
 
-  const stats = [
-    { icon: Zap, label: t('about.stats.projects'), value: '20+' },
-    { icon: Users, label: t('about.stats.contributors'), value: '100+' },
-    { icon: Star, label: t('about.stats.stars'), value: '1.5k+' },
-  ]
+  // const stats = [
+  //   { icon: Zap, label: t('about.stats.projects'), value: '20+' },
+  //   { icon: Users, label: t('about.stats.contributors'), value: '100+' },
+  //   { icon: Star, label: t('about.stats.stars'), value: '1.5k+' },
+  // ]
 
   return (
     <section id="about" className="py-20 bg-white dark:bg-dark-900">

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Github, Mail, ExternalLink } from 'lucide-react'
+import { Github, ExternalLink } from 'lucide-react'
 
 const Footer = () => {
   const { t } = useTranslation()
