@@ -131,7 +131,7 @@ const AboutSection = () => {
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <motion.a
-              href="https://github.com/sifli-sparks"
+              href="https://github.com/SiFliSparks"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}

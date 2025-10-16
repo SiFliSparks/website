@@ -65,7 +65,7 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4">联系我们</h3>
             <div className="space-y-3">
               <a
-                href="https://github.com/sifli-sparks"
+                href="https://github.com/SiFliSparks"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-primary-400 transition-colors flex items-center gap-2"
