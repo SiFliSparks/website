@@ -4,9 +4,27 @@
 [projects.superkey]
 name = "SuperKey"
 description = """
-多功能宏键盘
+带屏多功能机械宏键盘，屏幕内容支持上位机设置。支持天气预报，股票信息，电脑状态，媒体控制，快捷键，键盘宏等多种功能。
 """
 thumbnail = "images/superkey.png"
 tags = ["键盘"]
 github_url = "https://github.com/SiFliSparks/SuperKey"
 docs_url = "https://sparks.sifli.com/projects/superkey/"
+
+[projects.RadiationMonitor]
+name = "Radiation Monitor"
+description = """
+通过蓝牙扫描获取2402MHz~2480MHz频段内每个频点的信号强度，并实时通过柱状图在屏幕上显示。
+"""
+thumbnail = "images/radiation_monitor.jpg"
+tags = ["信号检测器", "蓝牙"]
+github_url = "https://github.com/SiFliSparks/RadiationMonitor"
+
+[projects.PocketPi]
+name = "Pocket Pi"
+description = """
+基于 SF32LB52 的多功能便携游戏机，内置 NES 模拟器，支持多种复古游戏。
+"""
+thumbnail = "images/pocket_pi.jpg"
+tags = ["游戏机", "NES模拟器"]
+github_url = "https://github.com/SiFliSparks/PocketPi"
