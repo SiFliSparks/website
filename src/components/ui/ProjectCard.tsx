@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
-import { Github, Tag, Star, GitFork, Eye } from 'lucide-react'
+import { Github, Tag, Star, GitFork, Eye, BookOpen } from 'lucide-react'
 import { useState, useRef } from 'react'
 import { useGitHubStatsWithCache } from '../../hooks/useGitHubStats'
 
@@ -9,6 +9,7 @@ interface Project {
   thumbnail: string
   tags: string[]
   github_url: string
+  docs_url?: string
 }
 
 interface ProjectCardProps {
@@ -163,34 +164,36 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             ))}
           </div>
           
-          {/* 项目图标 */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div
-              className="relative"
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-2xl font-bold text-white">
-                  {project.name.charAt(0)}
-                </span>
-              </div>
-              
-              {/* 环形光效 */}
+          {/* 项目图标 - 只在没有缩略图时显示 */}
+          {!project.thumbnail && (
+            <div className="absolute inset-0 flex items-center justify-center">
               <motion.div
-                className="absolute inset-0 rounded-xl border-2 border-primary-400"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.5, 0, 0.5],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-            </motion.div>
-          </div>
+                className="relative"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <span className="text-2xl font-bold text-white">
+                    {project.name.charAt(0)}
+                  </span>
+                </div>
+                
+                {/* 环形光效 */}
+                <motion.div
+                  className="absolute inset-0 rounded-xl border-2 border-primary-400"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.5, 0, 0.5],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+              </motion.div>
+            </div>
+          )}
           
           {/* GitHub统计悬浮显示 */}
           <motion.div

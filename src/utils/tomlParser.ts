@@ -7,6 +7,7 @@ export interface Project {
   thumbnail: string
   tags: string[]
   github_url: string
+  docs_url?: string
 }
 
 interface TomlProject {
@@ -15,6 +16,7 @@ interface TomlProject {
   thumbnail: string
   tags: string[]
   github_url: string
+  docs_url?: string
 }
 
 interface TomlConfig {
@@ -35,7 +37,8 @@ export const parseToml = (tomlContent: string): Project[] => {
       description: project.description || '',
       thumbnail: project.thumbnail || '',
       tags: Array.isArray(project.tags) ? project.tags : [],
-      github_url: project.github_url || ''
+      github_url: project.github_url || '',
+      docs_url: project.docs_url
     }))
 
     return projects
