@@ -139,6 +139,19 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
         {/* 项目图片区域 */}
         <div className="relative aspect-video bg-gradient-to-br from-primary-100 via-blue-100 to-purple-100 dark:from-primary-900/50 dark:via-blue-900/50 dark:to-purple-900/50 overflow-hidden">
+          {/* 缩略图 */}
+          {project.thumbnail && (
+            <img
+              src={`/${project.thumbnail}`}
+              alt={project.name}
+              className="absolute inset-0 w-full h-full object-cover"
+              onError={(e) => {
+                // 图片加载失败时隐藏图片，显示默认背景
+                (e.target as HTMLImageElement).style.display = 'none'
+              }}
+            />
+          )}
+          
           {/* 粒子效果背景 */}
           <div className="absolute inset-0">
             {[...Array(8)].map((_, i) => (
@@ -238,14 +251,19 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               GitHub
             </motion.a>
             
-            <motion.button
-              className="bg-primary-500/80 hover:bg-primary-500 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors backdrop-blur-sm pointer-events-auto"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Eye size={18} />
-              Preview
-            </motion.button>
+{project.docs_url && (
+              <motion.a
+                href={project.docs_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-primary-500/80 hover:bg-primary-500 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors backdrop-blur-sm pointer-events-auto"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <BookOpen size={18} />
+                文档
+              </motion.a>
+            )}
           </motion.div>
         </div>
 

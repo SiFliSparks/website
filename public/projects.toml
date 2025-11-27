@@ -6,6 +6,7 @@ name = "SuperKey"
 description = """
 多功能宏键盘
 """
-thumbnail = "iot-gateway.jpg"
+thumbnail = "images/superkey.png"
 tags = ["键盘"]
 github_url = "https://github.com/SiFliSparks/SuperKey"
+docs_url = "https://sparks.sifli.com/projects/superkey/"
