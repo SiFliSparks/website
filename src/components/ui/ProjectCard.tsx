@@ -18,6 +18,7 @@ interface ProjectCardProps {
 const ProjectCard = ({ project }: ProjectCardProps) => {
   const [isHovered, setIsHovered] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   
   // 获取真实的GitHub统计数据
   const { stats: githubStats, loading: statsLoading } = useGitHubStatsWithCache(project.github_url)
@@ -37,9 +38,9 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   )
   
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return
+    if (!containerRef.current) return
     
-    const rect = cardRef.current.getBoundingClientRect()
+    const rect = containerRef.current.getBoundingClientRect()
     const centerX = rect.left + rect.width / 2
     const centerY = rect.top + rect.height / 2
     
@@ -62,6 +63,13 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   }
 
   return (
+    <div
+      ref={containerRef}
+      className="relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
+    >
     <motion.div
       ref={cardRef}
       style={{
@@ -70,18 +78,14 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         transformStyle: 'preserve-3d',
         transformOrigin: 'center center',
       }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      onMouseEnter={() => setIsHovered(true)}
-      whileHover={{ 
-        y: -8,
-        scale: 1.02,
-        transition: { 
-          type: "spring", 
-          stiffness: 200, 
-          damping: 20,
-          duration: 0.4
-        }
+      animate={{ 
+        y: isHovered ? -8 : 0,
+        scale: isHovered ? 1.02 : 1,
+      }}
+      transition={{ 
+        type: "spring", 
+        stiffness: 200, 
+        damping: 20,
       }}
       initial={{ 
         rotateX: 0, 
@@ -190,7 +194,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           
           {/* GitHub统计悬浮显示 */}
           <motion.div
-            className="absolute top-3 right-3 flex gap-2"
+            className="absolute top-3 right-3 flex gap-2 pointer-events-none"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ 
               opacity: isHovered && githubStats && !statsLoading ? 1 : 0,
@@ -214,7 +218,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 
           {/* 快速访问按钮 */}
           <motion.div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center gap-3"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center gap-3 pointer-events-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.3 }}
@@ -223,7 +227,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               href={project.github_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors backdrop-blur-sm border border-white/20"
+              className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors backdrop-blur-sm border border-white/20 pointer-events-auto"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -232,7 +236,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             </motion.a>
             
             <motion.button
-              className="bg-primary-500/80 hover:bg-primary-500 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors backdrop-blur-sm"
+              className="bg-primary-500/80 hover:bg-primary-500 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors backdrop-blur-sm pointer-events-auto"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -336,6 +340,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
              style={{ transform: 'translateZ(-1px)' }} />
       </motion.div>
     </motion.div>
+    </div>
   )
 }
 
