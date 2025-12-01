@@ -1,6 +1,6 @@
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Github, Tag, Star, GitFork, Eye, BookOpen } from 'lucide-react'
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { useGitHubStatsWithCache } from '../../hooks/useGitHubStats'
 
 interface Project {
@@ -18,70 +18,24 @@ interface ProjectCardProps {
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   const [isHovered, setIsHovered] = useState(false)
-  const cardRef = useRef<HTMLDivElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
   
   // 获取真实的GitHub统计数据
   const { stats: githubStats, loading: statsLoading } = useGitHubStatsWithCache(project.github_url)
   
-  // 3D 鼠标跟踪效果 - 优化配置
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  
-  // 使用更保守的旋转角度和弹性配置
-  const rotateX = useSpring(
-    useTransform(mouseY, [-200, 200], [8, -8]),
-    { stiffness: 100, damping: 30, mass: 1 }
-  )
-  const rotateY = useSpring(
-    useTransform(mouseX, [-200, 200], [-8, 8]),
-    { stiffness: 100, damping: 30, mass: 1 }
-  )
-  
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return
-    
-    const rect = containerRef.current.getBoundingClientRect()
-    const centerX = rect.left + rect.width / 2
-    const centerY = rect.top + rect.height / 2
-    
-    // 限制鼠标追踪范围
-    const maxDistance = 150
-    const rawX = event.clientX - centerX
-    const rawY = event.clientY - centerY
-    
-    const clampedX = Math.max(-maxDistance, Math.min(maxDistance, rawX))
-    const clampedY = Math.max(-maxDistance, Math.min(maxDistance, rawY))
-    
-    mouseX.set(clampedX)
-    mouseY.set(clampedY)
-  }
-  
   const handleMouseLeave = () => {
-    mouseX.set(0)
-    mouseY.set(0)
     setIsHovered(false)
   }
 
   return (
     <div
-      ref={containerRef}
       className="relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      onMouseMove={handleMouseMove}
     >
     <motion.div
-      ref={cardRef}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: 'preserve-3d',
-        transformOrigin: 'center center',
-      }}
       animate={{ 
         y: isHovered ? -8 : 0,
-        scale: isHovered ? 1.02 : 1,
+        scale: isHovered ? 1.01 : 1,
       }}
       transition={{ 
         type: "spring", 
@@ -93,11 +47,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         rotateY: 0,
         scale: 1
       }}
-      className="relative group perspective-1000 will-change-transform"
+      className="relative group will-change-transform"
     >
       {/* 外发光效果 */}
       <motion.div
-        className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-blue-500 to-purple-500 rounded-xl blur-sm opacity-0 group-hover:opacity-70 transition-all duration-500"
+        className="absolute -inset-1 bg-gradient-to-r from-primary-500 via-blue-500 to-purple-500 rounded-xl blur-sm opacity-0 group-hover:opacity-70 transition-all duration-500 pointer-events-none"
         animate={{
           scale: isHovered ? 1.02 : 1,
         }}
@@ -105,7 +59,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
       
       {/* 主卡片 */}
       <motion.div 
-        className="relative card overflow-hidden bg-white dark:bg-dark-800 transform-gpu backface-hidden preserve-3d"
+        className="relative card overflow-hidden bg-white dark:bg-dark-800 transform-gpu"
         style={{
           backfaceVisibility: 'hidden',
           WebkitBackfaceVisibility: 'hidden',
@@ -118,7 +72,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         transition={{ duration: 0 }}
       >
         {/* 动态背景网格 */}
-        <div className="absolute inset-0 opacity-5 dark:opacity-10">
+        <div className="absolute inset-0 opacity-5 dark:opacity-10 pointer-events-none">
           <div className="absolute inset-0" style={{
             backgroundImage: `
               linear-gradient(rgba(35, 185, 232, 0.3) 1px, transparent 1px),
@@ -130,7 +84,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         
         {/* 光束动画 */}
         <motion.div
-          className="absolute top-0 -left-full h-full w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:animate-pulse"
+          className="absolute top-0 -left-full h-full w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:animate-pulse pointer-events-none"
           animate={{
             x: isHovered ? '400%' : '-100%',
           }}
@@ -144,7 +98,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             <img
               src={`/${project.thumbnail}`}
               alt={project.name}
-              className="absolute inset-0 w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
               onError={(e) => {
                 // 图片加载失败时隐藏图片，显示默认背景
                 (e.target as HTMLImageElement).style.display = 'none'
@@ -153,7 +107,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           )}
           
           {/* 粒子效果背景 */}
-          <div className="absolute inset-0">
+          <div className="absolute inset-0 pointer-events-none">
             {[...Array(8)].map((_, i) => (
               <motion.div
                 key={i}
@@ -210,7 +164,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           
           {/* GitHub统计悬浮显示 */}
           <motion.div
-            className="absolute top-3 right-3 flex gap-2 pointer-events-none"
+            className="absolute top-3 right-3 flex gap-2 pointer-events-none z-10"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ 
               opacity: isHovered && githubStats && !statsLoading ? 1 : 0,
@@ -232,39 +186,44 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             )}
           </motion.div>
 
-          {/* 快速访问按钮 */}
+          {/* 悬浮操作 - 仅覆盖图片区域 */}
           <motion.div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center gap-3 pointer-events-none"
+            className="absolute inset-0 z-20 flex items-center justify-center"
+            style={{ pointerEvents: isHovered ? 'auto' : 'none' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
           >
-            <motion.a
-              href={project.github_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors backdrop-blur-sm border border-white/20 pointer-events-auto"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Github size={18} />
-              GitHub
-            </motion.a>
-            
-{project.docs_url && (
+            <div className="absolute inset-0 bg-black/55 backdrop-blur-sm pointer-events-none" />
+            <div className="relative flex items-center gap-3 pointer-events-auto">
               <motion.a
-                href={project.docs_url}
+                href={project.github_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary-500/80 hover:bg-primary-500 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors backdrop-blur-sm pointer-events-auto"
+                className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors backdrop-blur-sm border border-white/20"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <BookOpen size={18} />
-                文档
+                <Github size={18} />
+                GitHub
               </motion.a>
-            )}
+              
+              {project.docs_url && (
+                <motion.a
+                  href={project.docs_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-primary-500/80 hover:bg-primary-500 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors backdrop-blur-sm"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <BookOpen size={18} />
+                  文档
+                </motion.a>
+              )}
+            </div>
           </motion.div>
+
         </div>
 
         {/* 卡片内容 */}
@@ -355,10 +314,6 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             transition={{ duration: 0.5, ease: "easeInOut" }}
           />
         </div>
-        
-        {/* 3D深度效果 */}
-        <div className="absolute inset-0 rounded-xl shadow-xl pointer-events-none" 
-             style={{ transform: 'translateZ(-1px)' }} />
       </motion.div>
     </motion.div>
     </div>
